@@ -1,29 +1,32 @@
-<nav class="navbar navbar-expand-lg navbar-light nav-color">
+<nav class="navbar navbar-expand-lg  navbar-light nav-color">
+ <div class="container-fluid">
   <a class="navbar-brand" href="#">Scraper</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
+
+    
     <% if user_signed_in? %>
-      <li class="nav-item">
+      <div class="navbar-nav mx-auto">
+      <p class="nav-item">
         <a class="nav-link" href="#">My Scrapes</a>
-      </li>
-      <li class="nav-item">
+      </p>
+      <button class="nav-item">
     <%= button_to "Log out",  destroy_user_session_path, method: :delete, class:"logout-btn" %>
 
-      </li>
+      </button>
+      </div>
       <% else %>
 
-   
-      <li class="nav-item">
-        <%= link_to "Log in", new_user_session_path, class:"login-btn" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "Sign up", new_user_registration_path, class:"register-btn" %>
-      </li>
+   <div class="navbar-nav mx-auto">
+      <button class="nav-item ">
+        <%= link_to "Log in", new_user_session_path, class:"btn btn-warning" %>
+      </button>
+      <button class="nav-item">
+        <%= link_to "Sign up", new_user_registration_path, class:"btn btn-warning" %>
+      </button>
+      </div>
       <% end %>
+ 
 
-    </ul>
+ 
+
   </div>
 </nav>
