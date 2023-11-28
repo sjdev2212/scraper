@@ -5,6 +5,17 @@ class ScrapDetailsController < ApplicationController
     def show
         @scrap_detail = ScrapDetail.find(params[:id])
     end
+    def new
+        @scrap_detail = ScrapDetail.new
+    end
+    def create
+        @scrap_detail = ScrapDetail.new(scrap_detail_params)
+        if @scrap_detail.save
+            redirect_to @scrap_detail
+        else
+            render 'new'
+        end
+    end
 
     private 
 
