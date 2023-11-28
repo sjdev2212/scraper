@@ -1,0 +1,10 @@
+<% if @csv_content.present? %>
+<%= @csv_content.class%>
+
+    <% @csv_content.each do |string_value | %>
+      <p><%= string_value[0] %></p>
+    <% end %>
+ 
+<% else %>
+  <p>No CSV content available.</p>
+<% end %>
