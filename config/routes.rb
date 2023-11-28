@@ -10,5 +10,6 @@ Rails.application.routes.draw do
     member do
       get 'process_csv'
     end
+    resources :scrap_details, only: [:index]
   end
 end
