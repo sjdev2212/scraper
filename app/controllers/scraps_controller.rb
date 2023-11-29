@@ -87,7 +87,7 @@ class ScrapsController < ApplicationController
 
     unparsed_page = HTTParty.get(url, headers: headers)
     parsed_page = Nokogiri::HTML(unparsed_page.body)
-    # Extract the number of advertisers (sponsored results) from the page
+
     advertisers_count = parsed_page.css('span:contains("Sponsored")').count
     result_stats = parsed_page.css('#result-stats').text
     links = parsed_page.css('a').count

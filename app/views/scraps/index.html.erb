@@ -4,10 +4,14 @@ scrappers</h1>
 
 <h1>These are your queries </h1>
 
-<%  current_user.scraps.each do |q| %>
-<%= q.queries %>
-<% end %>
-
+<h1>Your Uploaded Keywords</h1>
+<ul>
+  <% @scraps.each do |scrap| %>
+    <li>
+      <%= link_to scrap.queries, scrap_path(scrap) %>
+    </li>
+  <% end %>
+</ul>
 
 
 
