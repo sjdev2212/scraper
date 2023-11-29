@@ -1,5 +1,6 @@
 # Controller responsible for handling CRUD operations for Scrap objects.
 # frozen_string_literal: true
+
 class ScrapsController < ApplicationController
   require 'csv'
   require 'httparty'
@@ -21,15 +22,15 @@ class ScrapsController < ApplicationController
 
   def create
     @scrap = Scrap.new(csv_file_name: params[:scrap][:csv_file_name], user_id: current_user.id)
-  
+
     file_path = @scrap.csv_file_name.path
     @csv_content = process_csv_file(file_path)
-  
+
     if @scrap.save
       @csv_content.each do |row|
         query = row[0]
         next if query.nil? || query.blank?
-  
+
         data = get_data(query)
         @scrap_detail = ScrapDetail.create(
           addWords: data[0],
@@ -37,18 +38,17 @@ class ScrapsController < ApplicationController
           links: data[2],
           html_cache: data[3],
           scrap_id: @scrap.id,
-          query: query  
+          query: query
         )
       end
-  
+
       flash[:notice] = 'Scrap was successfully created.'
-      redirect_to scraps_path 
+      redirect_to scraps_path
     else
       flash[:alert] = 'Scrap was not created.'
       render :new
     end
   end
-  
 
   def process_csv
     # Get the uploaded CSV file from the first Scrap record for simplicity
