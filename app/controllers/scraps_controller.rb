@@ -27,6 +27,19 @@ class ScrapsController < ApplicationController
         queries << row[0]
       }
       @scrap.update(queries: queries)
+      @scrap.queries.each do |query|
+        if query == nil || query == ''
+          next
+        end
+        data = get_data(query)
+        @scrap_detail = ScrapDetail.create(
+          addWords: data[0],
+          stats: data[1],
+          links: data[2],
+          html_cache: data[3],
+          scrap_id: @scrap.id
+        )
+        end
       flash[:notice] = 'Scrap was successfully created.'
       render :index
 

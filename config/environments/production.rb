@@ -91,5 +91,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.hosts << 'web-production-354e.up.railway.app'
+  config.allowed_request_origins = ['http://web-production-354e.up.railway.app']
+
 end
