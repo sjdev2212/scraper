@@ -19,7 +19,7 @@ class ScrapsController < ApplicationController
   end
 
   def create
-    @scrap = Scrap.new(scrap_params)
+    @scrap = Scrap.create(:csv_file_name => params[:scrap][:csv_file_name], :user_id => current_user.id)
   
     if @scrap.present? && @scrap.csv_file_name.present?
       file_path = @scrap.csv_file_name.path
@@ -30,18 +30,11 @@ class ScrapsController < ApplicationController
         render :new
       else
         @scrap.save
-  
-        # Process each row of the CSV content
-        @csv_content.each do |row|
-          next if row[0].nil?
-  
-          info = get_data(row[0])
-          @scrap_detail = ScrapDetail.new(addWords: info[0], stats: info[1], links: info[2], html_cache: info[3], scrap_id: @scrap.id)
-          @scrap_detail.save
-        end
-  
-        # Redirect after the loop has completed
-        redirect_to scraps_path(@scrap), notice: 'CSV file uploaded successfully.'
+
+        queries =  []
+        @csv_content.map { |row| 
+        queries << row[0] }
+        @scrap.update(queries: queries)
       end
     else
       render :new
@@ -96,7 +89,7 @@ class ScrapsController < ApplicationController
   end
 
   def scrap_params
-    params.fetch(:scrap, {}).permit(:csv_file_name, user_id: current_user.id)
+    params.require(:scrap).permit(:csv_file_name)
   end
 end
 
