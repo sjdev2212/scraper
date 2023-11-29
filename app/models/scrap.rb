@@ -5,4 +5,7 @@ class Scrap < ApplicationRecord
 
   validates :csv_file_name, presence: true
   validates :user_id, presence: true
+
+
+
 end

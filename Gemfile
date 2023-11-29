@@ -32,6 +32,8 @@ gem "redis", "~> 4.0"
 
 gem 'httparty', '~> 0.21.0'
 
+gem 'bootstrap-icons', '~> 1.0', '>= 1.0.14'
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 

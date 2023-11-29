@@ -2,17 +2,12 @@
 scrappers</h1>
 
 
-<h1>These are your queries </h1>
+<% @scraps.each do |scrap| %>
+  <h3>Queries and Results for Scrap <%= scrap.id %></h3>
 
-<h1>Your Uploaded Keywords</h1>
-<ul>
-  <% @scraps.each do |scrap| %>
-    <li>
-      <%= link_to scrap.queries, scrap_path(scrap) %>
-    </li>
-  <% end %>
-</ul>
-
-
-
+<% scrap.scrap_details.each do |detail|  %>
+<%= detail.query%>
+<%= detail.stats%>
+<%end %>
+<% end %>
 

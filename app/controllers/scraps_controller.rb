@@ -6,7 +6,7 @@ class ScrapsController < ApplicationController
   require 'nokogiri'
 
   def index
-    @scraps = Scrap.all
+    @scraps = current_user.scraps
     @scrap_queries = Scrap.pluck(:queries)
   end
 
@@ -20,40 +20,35 @@ class ScrapsController < ApplicationController
   end
 
   def create
-    @scrap = Scrap.create(:csv_file_name => params[:scrap][:csv_file_name], :user_id => current_user.id)
-
+    @scrap = Scrap.new(csv_file_name: params[:scrap][:csv_file_name], user_id: current_user.id)
+  
     file_path = @scrap.csv_file_name.path
     @csv_content = process_csv_file(file_path)
-
+  
     if @scrap.save
-      queries = []
-      @csv_content.map { |row|
-        queries << row[0]
-      }
-      @scrap.update(queries: queries)
-      @scrap.queries.each do |query|
-        if query == nil || query == ''
-          next
-        end
+      @csv_content.each do |row|
+        query = row[0]
+        next if query.nil? || query.blank?
+  
         data = get_data(query)
         @scrap_detail = ScrapDetail.create(
           addWords: data[0],
           stats: data[1],
           links: data[2],
           html_cache: data[3],
-          scrap_id: @scrap.id
+          scrap_id: @scrap.id,
+          query: query  
         )
-        end
+      end
+  
       flash[:notice] = 'Scrap was successfully created.'
-      render :index
-
+      redirect_to scraps_path 
     else
-
-      redirect_to '/scraps/index'
       flash[:alert] = 'Scrap was not created.'
-
+      render :new
     end
   end
+  
 
   def process_csv
     # Get the uploaded CSV file from the first Scrap record for simplicity
@@ -91,12 +86,7 @@ class ScrapsController < ApplicationController
     advertisers_count = parsed_page.css('span:contains("Sponsored")').count
     result_stats = parsed_page.css('#result-stats').text
     links = parsed_page.css('a').count
-    # Save the HTML code of the page to a file
-    file_path = "#{formatted_search_term}_page.html"
-    File.write(file_path, parsed_page.to_html)
-
-    html_content = File.read(file_path)
-
+    html_content = parsed_page.to_html
     result.push(advertisers_count, result_stats, links, html_content)
 
     result

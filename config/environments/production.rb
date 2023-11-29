@@ -93,4 +93,5 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
 
-  config.hosts << "*" # Allow connections to local server.
+  config.hosts << 'web-production-354e.up.railway.app'
+end

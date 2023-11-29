@@ -1,27 +1,25 @@
 <nav class="navbar navbar-expand-lg  navbar-light nav-color">
  <div class="container-fluid">
-  <a class="navbar-brand" href="#">Scraper</a>
+  <%=link_to 'Scraper ', root_path , class:"navbar-brand text-light"  %>
 
     
     <% if user_signed_in? %>
       <div class="navbar-nav mx-auto">
-      <p class="nav-item">
-        <a class="nav-link" href="#">My Scrapes</a>
-      </p>
-      <button class="nav-item">
-    <%= button_to "Log out",  destroy_user_session_path, method: :delete, class:"logout-btn" %>
+      
+  
+    <%= button_to "Log out",  destroy_user_session_path, method: :delete, class:"btn btn-light fw-normal text-danger-emphasis" %>
 
-      </button>
+   
       </div>
       <% else %>
 
    <div class="navbar-nav mx-auto">
-      <button class="nav-item ">
-        <%= link_to "Log in", new_user_session_path, class:"btn btn-warning" %>
-      </button>
-      <button class="nav-item">
-        <%= link_to "Sign up", new_user_registration_path, class:"btn btn-warning" %>
-      </button>
+ 
+        <%= link_to "Log in", new_user_session_path, class:"btn btn-light fw-normal text-danger-emphasis ms-5" %>
+  
+   
+        <%= link_to "Sign up", new_user_registration_path, class:"btn btn-light fw-normal text-danger-emphasis ms-5" %>
+   
       </div>
       <% end %>
  

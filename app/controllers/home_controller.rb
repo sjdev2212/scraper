@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   def index
-    @user = User.new
+    @scraps = current_user.present? ? current_user.scraps : []
+  
   end
 end

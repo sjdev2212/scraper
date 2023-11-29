@@ -78,6 +78,8 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 2.11.8, < 3)
       sassc-rails (>= 2.0.0)
+    bootstrap-icons (1.0.14)
+      nokogiri (~> 1)
     builder (3.2.4)
     capybara (3.39.2)
       addressable
@@ -262,6 +264,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   bootstrap
+  bootstrap-icons (~> 1.0, >= 1.0.14)
   capybara
   carrierwave (~> 3.0)
   debug
