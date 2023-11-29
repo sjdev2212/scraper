@@ -9,6 +9,7 @@ class ScrapsController < ApplicationController
 
   def index
     @scraps = Scrap.all
+    @scrap_queries = Scrap.pluck(:queries)
 
   
 
@@ -21,25 +22,25 @@ class ScrapsController < ApplicationController
   def create
     @scrap = Scrap.create(:csv_file_name => params[:scrap][:csv_file_name], :user_id => current_user.id)
   
-    if @scrap.present? && @scrap.csv_file_name.present?
       file_path = @scrap.csv_file_name.path
       @csv_content = process_csv_file(file_path)
-  
-      if @csv_content.count > 100
-        flash[:alert] = 'File should not contain more than 100 queries.'
-        render :new
-      else
-        @scrap.save
-
-        queries =  []
+      
+       if   @scrap.save
+       queries =  []
         @csv_content.map { |row| 
         queries << row[0] }
         @scrap.update(queries: queries)
-      end
-    else
-      render :new
-    end
+    flash[:notice] = 'Scrap was successfully created.'
+ 
+       else
+  
+    redirect_to  scraps_path(@scrap)
+    flash[:alert] = 'Scrap was not created.'
+
   end
+end
+  
+  
   
   def process_csv
     # Get the uploaded CSV file from the first Scrap record for simplicity
