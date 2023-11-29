@@ -1,18 +1,14 @@
 # Controller responsible for handling CRUD operations for Scrap objects.
 # frozen_string_literal: true
+
 class ScrapsController < ApplicationController
   require 'csv'
   require 'httparty'
   require 'nokogiri'
 
-
-
   def index
     @scraps = Scrap.all
     @scrap_queries = Scrap.pluck(:queries)
-
-  
-
   end
 
   def new
@@ -21,27 +17,27 @@ class ScrapsController < ApplicationController
 
   def create
     @scrap = Scrap.create(:csv_file_name => params[:scrap][:csv_file_name], :user_id => current_user.id)
-  
-      file_path = @scrap.csv_file_name.path
-      @csv_content = process_csv_file(file_path)
-      
-       if   @scrap.save
-       queries =  []
-        @csv_content.map { |row| 
-        queries << row[0] }
-        @scrap.update(queries: queries)
-    flash[:notice] = 'Scrap was successfully created.'
- 
-       else
-  
-    redirect_to  scraps_path(@scrap)
-    flash[:alert] = 'Scrap was not created.'
 
+    file_path = @scrap.csv_file_name.path
+    @csv_content = process_csv_file(file_path)
+
+    if @scrap.save
+      queries = []
+      @csv_content.map { |row|
+        queries << row[0]
+      }
+      @scrap.update(queries: queries)
+      flash[:notice] = 'Scrap was successfully created.'
+      render :index
+
+    else
+
+      redirect_to '/scraps/index'
+      flash[:alert] = 'Scrap was not created.'
+
+    end
   end
-end
-  
-  
-  
+
   def process_csv
     # Get the uploaded CSV file from the first Scrap record for simplicity
     @scrap = Scrap.find(params[:id])
@@ -93,4 +89,3 @@ end
     params.require(:scrap).permit(:csv_file_name)
   end
 end
-

@@ -2,19 +2,13 @@
 scrappers</h1>
 
 
-<h1>CSV File Content</h1>
+<h1>These are your queries </h1>
 
-
-    </h2>
-<%= form_tag(scraps_path, method: :get) do %>
-  <%= text_field_tag :search_term, @search_term, placeholder: 'Enter search term' %>
-  <%= submit_tag 'Search' %>
+<%  current_user.scraps.each do |q| %>
+<%= q.queries %>
 <% end %>
 
-<% if @search_term.present? %>
-  <h2>Search Term: <%= @search_term %></h2>
-  <p>Advertisers Count: <%= @data_count[0] %></p>
-  <p> Stats Count: <%= @data_count[1] %></p>
-    <p> Links Count: <%= @data_count[2] %></p>
-    <p> Html cache :  <%= @data_count[3] %>  </p>
-<% end %>
+
+
+
+
