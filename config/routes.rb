@@ -6,10 +6,9 @@ Rails.application.routes.draw do
   # root "articles#index"
   root to: "home#index"
 
-  resources :scraps, only: [:new, :create, :index] do
-    member do
-      get 'process_csv'
+  resources :scraps do
+    collection do
+      resources :scrap_details, only: [:index]
     end
-    resources :scrap_details, only: [:index]
   end
 end
