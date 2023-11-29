@@ -1,6 +1,5 @@
 # Controller responsible for handling CRUD operations for Scrap objects.
 # frozen_string_literal: true
-
 class ScrapsController < ApplicationController
   require 'csv'
   require 'httparty'
@@ -9,6 +8,11 @@ class ScrapsController < ApplicationController
   def index
     @scraps = Scrap.all
     @scrap_queries = Scrap.pluck(:queries)
+  end
+
+  def show
+    @scrap = Scrap.find(params[:id])
+    @scrap_detail = @scrap.scrap_details
   end
 
   def new
