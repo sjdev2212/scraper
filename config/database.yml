@@ -81,7 +81,7 @@ test:
 #
 production:
   <<: *default
-    url: <%= ENV['DATABASE_URL'] %>
+  url: <%= ENV['DATABASE_URL'] %>
   database: scraper_production
   username: scraper
   password: <%= ENV["SCRAPER_DATABASE_PASSWORD"] %>
