@@ -1,4 +1,4 @@
- databases:
+databases:
   - name: scraper
     databaseName: scraper_production
     user: scraper
@@ -7,7 +7,6 @@ services:
   - type: web
     name: scraper
     runtime: ruby
-    plan: free
     buildCommand: "./bin/render-build.sh"
     startCommand: "bundle exec puma -C config/puma.rb"
     envVars:
