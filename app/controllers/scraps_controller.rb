@@ -77,21 +77,31 @@ class ScrapsController < ApplicationController
   def get_data(search_term)
     result = []
     formatted_search_term = search_term.gsub(' ', '+')
-    url = "https://www.google.com/search?q=#{formatted_search_term}&gl=us"
-    headers = {
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36"
-    }
-    # Format the search term for the Google search URL
+    url = "https://www.google.com/search?q=#{formatted_search_term}=en-US"
 
-    unparsed_page = HTTParty.get(url, headers: headers)
+    headers = [
+      { "User-Agent":
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36" },
+      { "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36" },
+      { "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36" },
+      { "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36" },
+      { "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36" },
+      { "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36" }
+    ]
+    unparsed_page = HTTParty.get(url, headers: headers.sample, follow_redirects: true)
     parsed_page = Nokogiri::HTML(unparsed_page.body)
 
-    advertisers_count = parsed_page.css('span:contains("Sponsored")').count
+    advertisers_count = parsed_page.css('span').count
     result_stats = parsed_page.css('#result-stats').text
     links = parsed_page.css('a').count
     html_content = parsed_page.to_html
     result.push(advertisers_count, result_stats, links, html_content)
-
+    sleep(2)
     result
   end
 

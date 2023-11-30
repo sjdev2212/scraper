@@ -54,6 +54,8 @@ gem "sassc-rails"
 
 gem 'nokogiri', '~> 1.15', '>= 1.15.5'
 gem 'carrierwave', '~> 3.0'
+
+gem 'animate.css-rails', '~> 3.2.0'
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 

@@ -4,11 +4,28 @@ Hello <%= current_user.email%>
 <h3>
 You have uploaded <%= current_user.scraps.count %> files
 
+
+
 </h3>
 <% @scraps.each do |scrap| %>
+<ul class='list-group'>
+    <li class='list-group-item'>
 
+   
+       <div class="row">
+      <div class="col-md-6">
+   <%= File.basename(scrap.csv_file_name.file.filename) if scrap.csv_file_name.present? %>
+       
+      </div>
+      <div class="col-md-6">
+     
 <%= link_to 'See queries', scrap_path(scrap.id)%>
-<%= File.basename(scrap.csv_file_name.file.filename) if scrap.csv_file_name.present? %>
+       
+      </div>
+    </div>
+     </li>
+
+</ul>
 
 
 <% end %>
