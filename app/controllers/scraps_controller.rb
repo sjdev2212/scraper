@@ -14,7 +14,18 @@ class ScrapsController < ApplicationController
   def show
     @scrap = Scrap.find(params[:id])
     @scrap_detail = @scrap.scrap_details
+    @search = params[:search]
+    if @search.present?
+      @scrap_detail = @scrap.scrap_details.where('query LIKE ?', "%#{@search}%")
+    else
+      @scrap_detail = @scrap.scrap_details
+    end
+
+
+
   end
+  
+
 
   def new
     @scrap = Scrap.new
@@ -54,9 +65,7 @@ class ScrapsController < ApplicationController
   end
 
   def process_csv
-    # Get the uploaded CSV file from the first Scrap record for simplicity
     @scrap = Scrap.find(params[:id])
-
     if @scrap.present? && @scrap.csv_file_name.present?
       file_path = @scrap.csv_file_name.path
       @csv_content = process_csv_file(file_path)
@@ -67,12 +76,16 @@ class ScrapsController < ApplicationController
   end
 
   private
+def process_csv_file(file_path)
 
-  def process_csv_file(file_path)
-    # Use CSV.parse to read the content of the CSV file
-    csv_content = File.read(file_path)
-    CSV.parse(csv_content, headers: false)
+    csv_content = []  
+    CSV.foreach(file_path, headers: true) do |row|
+      csv_content.push(row)
+    end
+    csv_content
   end
+
+  
 
   def get_data(search_term)
     result = []

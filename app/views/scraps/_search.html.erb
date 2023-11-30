@@ -1,0 +1,33 @@
+<main class="container">
+  <%= form_tag(scrap_path(@scrap), method: :get) do %>
+    <section>
+      <div>
+        <%= text_field_tag :search, params[:search], class: 'form-control', placeholder: 'Search query...' %>
+      </div>
+
+      <%= submit_tag 'Search', class:'btn btn-outline-dark mt-4' %>
+    </section>
+  <% end %>
+
+  <section>
+    <% if @search.present? %>
+    <% if @scrap_detail.any? %>
+      <ul class='list-group border'>
+        <% @scrap_detail.each do |detail| %>
+
+          <li class='list-group-item'>
+    
+            <div class="col-md-6">
+            <%= link_to detail.query, scrap_details_path(id: @scrap.id, query: detail.query) ,class:'link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover ' %>
+            </div>
+           
+          
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No results found.</p>
+    <% end %>
+            <%end%>
+  </section>
+</main>
