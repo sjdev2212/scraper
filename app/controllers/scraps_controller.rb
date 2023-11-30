@@ -20,12 +20,7 @@ class ScrapsController < ApplicationController
     else
       @scrap_detail = @scrap.scrap_details
     end
-
-
-
   end
-  
-
 
   def new
     @scrap = Scrap.new
@@ -76,16 +71,14 @@ class ScrapsController < ApplicationController
   end
 
   private
-def process_csv_file(file_path)
 
-    csv_content = []  
+  def process_csv_file(file_path)
+    csv_content = []
     CSV.foreach(file_path, headers: true) do |row|
       csv_content.push(row)
     end
     csv_content
   end
-
-  
 
   def get_data(search_term)
     result = []
