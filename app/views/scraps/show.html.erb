@@ -1,0 +1,13 @@
+<h2>
+For the file with name: 
+<%= File.basename(@scrap.csv_file_name.file.filename) if @scrap.csv_file_name.present? %>
+there are  <%= @scrap.queries.count %> queries
+</h2>
+
+<% @scrap.queries.each do |query|%>
+<ul>
+    <li>
+        <%= query %>   <%=link_to 'See scraps' ,scrap_details_path(id: @scrap.id, query: query)  %> 
+    </li>
+</ul>
+<% end %>

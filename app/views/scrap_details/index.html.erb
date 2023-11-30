@@ -1,3 +1,14 @@
 <h1>
-Scrap details here 
+Results for the query:  <%= @scrap_detail.query %> 
 </h1>
+
+<h3>Number of  addWords: <%= @scrap_detail.addWords %>
+   </h3>
+<h3> Number of links found: <%= @scrap_detail.links %>
+   </h3>
+<h3> Number of results found: <%= @scrap_detail.stats %>
+    </h3>
+
+<p>
+HTML code of the page/cache: <%= @scrap_detail.html_cache %>
+</p>

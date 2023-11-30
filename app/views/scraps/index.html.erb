@@ -1,13 +1,19 @@
 <h1>
-scrappers</h1>
+Hello <%= current_user.email%>
+</h1>
+<h3>
+You have uploaded <%= current_user.scraps.count %> files
 
-
+</h3>
 <% @scraps.each do |scrap| %>
-  <h3>Queries and Results for Scrap <%= scrap.id %></h3>
 
-<% scrap.scrap_details.each do |detail|  %>
-<%= detail.query%>
-<%= detail.stats%>
-<%end %>
+<%= link_to 'See queries', scrap_path(scrap.id)%>
+<%= File.basename(scrap.csv_file_name.file.filename) if scrap.csv_file_name.present? %>
+
+
 <% end %>
+
+
+
+
 

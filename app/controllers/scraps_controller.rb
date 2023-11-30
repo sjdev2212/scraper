@@ -27,10 +27,13 @@ class ScrapsController < ApplicationController
     @csv_content = process_csv_file(file_path)
 
     if @scrap.save
+      temquery = []
       @csv_content.each do |row|
         query = row[0]
         next if query.nil? || query.blank?
 
+        temquery.push(query)
+        Scrap.update(@scrap.id, queries: temquery)
         data = get_data(query)
         @scrap_detail = ScrapDetail.create(
           addWords: data[0],

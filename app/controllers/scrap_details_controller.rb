@@ -1,6 +1,8 @@
 class ScrapDetailsController < ApplicationController
   def index
-    @scrap_details = ScrapDetail.all
+  
+    @scrap_detail = ScrapDetail.find_by(scrap_id: params[:id], query: params[:query])
+
   end
 
   def show
