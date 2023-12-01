@@ -1,8 +1,9 @@
 <section class='container  center-div'>
 <h1 class='text-center text-danger-emphasis mb-4'>Upload CSV File</h1>
+
 <div class=" custom-box text-center">
 <%= form_for @scrap, url: scraps_path, html: { multipart: true } do |f| %>
-  <%= f.file_field :csv_file_name ,class:"form-control text-center" %>
+  <%= f.file_field :csv_file_name , class:"form-control text-center",required: true %>
   <%= f.submit 'Upload' ,class:'btn btn-outline-dark mt-4' %>
 <% end %>
 </div>

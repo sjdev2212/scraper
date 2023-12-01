@@ -1,5 +1,6 @@
 class Scrap < ApplicationRecord
   mount_uploader :csv_file_name, CsvFileUploader
+  before_validation :set_user
   belongs_to :user
   has_many :scrap_details, dependent: :destroy
 
@@ -7,14 +8,19 @@ class Scrap < ApplicationRecord
   validates :user_id, presence: true
   validate :validate_unique_file_name
 
-  # other model code...
+
 
   private
+  def set_user
+    self.user = User.current_user if User.respond_to?(:current_user)
+  end
+
 
   def validate_unique_file_name
     return unless csv_file_name.cached?
 
-    if Scrap.exists?(csv_file_name: csv_file_name.file.original_filename)
+    existing_scrap = user.scraps.find_by(csv_file_name: csv_file_name.file.original_filename)
+    if existing_scrap && existing_scrap != self
       errors.add(:csv_file_name, 'file name already exists in the database')
     end
   end

@@ -35,6 +35,19 @@ class ScrapsController < ApplicationController
     file_path = @scrap.csv_file_name.path
     @csv_content = process_csv_file(file_path)
 
+    if @csv_content.size > 100
+      @scrap.errors.add(:base, 'Number of queries exceeds the limit (100).')
+      flash[:alert] = 'Number of queries exceeds the limit (100).'
+      render :new
+      return
+    end
+    if @csv_content.size < 1
+      @scrap.errors.add(:base, 'Number of queries is less than 1.')
+      flash[:alert] = 'Number of queries is less than 1.'
+      render :new
+      return
+    end
+
     if @scrap.save
       temquery = []
       @csv_content.each do |row|
@@ -91,7 +104,7 @@ class ScrapsController < ApplicationController
 
   def process_csv_file(file_path)
     csv_content = []
-    CSV.foreach(file_path, headers: false, encoding: 'ISO-8859-1') do |row|
+    CSV.foreach(file_path, headers: false) do |row|
       csv_content.push(row)
     end
 
@@ -121,11 +134,9 @@ class ScrapsController < ApplicationController
     parsed_page = Nokogiri::HTML(unparsed_page.body)
     all_spans = parsed_page.css('span')
 
-    # Filter spans with text content containing "Sponsored"
-    sponsored_spans = all_spans.select { |span| span.text.include?('Sponsored') }
+ sponsored_spans = all_spans.select { |span| span.text.strip.downcase.include?('sponsored') }
+advertisers_count = sponsored_spans.count
 
-    # Get the count of sponsored spans
-    advertisers_count = all_spans.count
 
     result_stats = parsed_page.css('#result-stats').text
     links = parsed_page.css('a').count
@@ -136,7 +147,7 @@ class ScrapsController < ApplicationController
   end
 
   def validate_csv_file
-    return if params[:scrap][:csv_file_name].blank?
+  
 
     unless valid_csv_file?
       flash[:alert] = 'Invalid file type. Please upload a CSV file.'
