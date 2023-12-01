@@ -113,6 +113,11 @@ GEM
     diff-lcs (1.5.0)
     erubi (1.12.0)
     execjs (2.9.1)
+    factory_bot (6.4.2)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.2)
+      factory_bot (~> 6.4)
+      railties (>= 5.0.0)
     ffi (1.16.3)
     globalid (1.1.0)
       activesupport (>= 5.0)
@@ -293,6 +298,7 @@ DEPENDENCIES
   carrierwave (~> 3.0)
   debug
   devise (~> 4.9, >= 4.9.3)
+  factory_bot_rails
   httparty (~> 0.21.0)
   importmap-rails
   jbuilder
