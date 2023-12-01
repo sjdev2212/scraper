@@ -4,7 +4,7 @@
 class ScrapsController < ApplicationController
   before_action :authenticate_user!
   before_action :validate_csv_file, only: :create
-  
+
   require 'csv'
   require 'httparty'
   require 'nokogiri'
@@ -28,19 +28,19 @@ class ScrapsController < ApplicationController
   def new
     @scrap = Scrap.new
   end
+
   def create
     @scrap = Scrap.new(csv_file_name: params[:scrap][:csv_file_name], user_id: current_user.id)
-  
+
     file_path = @scrap.csv_file_name.path
     @csv_content = process_csv_file(file_path)
 
-  
     if @scrap.save
       temquery = []
       @csv_content.each do |row|
         query = row[0]
         next if query.nil? || query.blank?
-  
+
         temquery.push(query)
         Scrap.update(@scrap.id, queries: temquery)
         data = get_data(query)
@@ -55,7 +55,7 @@ class ScrapsController < ApplicationController
           query: query
         )
       end
-  
+
       flash[:notice] = 'Scrap was successfully created.'
       redirect_to scraps_path
     else
@@ -64,20 +64,17 @@ class ScrapsController < ApplicationController
       else
         flash[:alert] = 'Scrap was not created.'
       end
-  
+
       render :new
     end
   end
-  
 
-
-  def delete 
+  def delete
     @scrap = Scrap.find(params[:id])
     @scrap.destroy
     flash[:notice] = 'Scrap was successfully deleted.'
     redirect_to scraps_path
   end
-  
 
   def process_csv
     @scrap = Scrap.find(params[:id])
@@ -97,10 +94,10 @@ class ScrapsController < ApplicationController
     CSV.foreach(file_path, headers: false, encoding: 'ISO-8859-1') do |row|
       csv_content.push(row)
     end
-  
+
     csv_content
   end
-  
+
   def get_data(search_term)
     result = []
     formatted_search_term = search_term.gsub(' ', '+')
@@ -124,13 +121,12 @@ class ScrapsController < ApplicationController
     parsed_page = Nokogiri::HTML(unparsed_page.body)
     all_spans = parsed_page.css('span')
 
-# Filter spans with text content containing "Sponsored"
-sponsored_spans = all_spans.select { |span| span.text.include?('Sponsored') }
+    # Filter spans with text content containing "Sponsored"
+    sponsored_spans = all_spans.select { |span| span.text.include?('Sponsored') }
 
-# Get the count of sponsored spans
-advertisers_count = all_spans.count 
+    # Get the count of sponsored spans
+    advertisers_count = all_spans.count
 
-    
     result_stats = parsed_page.css('#result-stats').text
     links = parsed_page.css('a').count
     html_content = parsed_page.to_html

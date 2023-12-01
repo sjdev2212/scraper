@@ -7,12 +7,9 @@ class Scrap < ApplicationRecord
   validates :user_id, presence: true
   validate :validate_unique_file_name
 
-
   # other model code...
 
   private
-
-
 
   def validate_unique_file_name
     return unless csv_file_name.cached?
