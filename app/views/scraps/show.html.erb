@@ -1,4 +1,7 @@
 <section class='container'>
+<div class='text-end '>
+<%= link_to 'Go Back' , scraps_path ,class:'link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover ' %>
+</div>
 <%= render partial: '/scraps/search' %>
 <h2 class='text-center text-danger-emphasis'>
 There are  <%= @scrap.queries.count %> queries
@@ -15,7 +18,7 @@ for the file with name:
         <%= query %>  
         </div>
         <div class="col-md-6">
-         <%=link_to 'See scraps' ,scrap_details_path(id: @scrap.id, query: query)  %> 
+         <%=link_to 'See scraps' ,scrap_details_path(id: @scrap.id, query: query) ,class:'link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover ' %> 
         </div>
     </div>
     </li>

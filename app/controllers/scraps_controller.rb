@@ -82,13 +82,22 @@ class ScrapsController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
     @scrap = Scrap.find(params[:id])
-    @scrap.destroy
-    flash[:notice] = 'Scrap was successfully deleted.'
-    redirect_to scraps_path
+    
+    Rails.logger.debug("Before destroy: #{@scrap.inspect}")
+  
+    begin
+      @scrap.destroy
+      flash[:notice] = 'Scrap was successfully deleted.'
+      redirect_to scraps_path
+    rescue StandardError => e
+      Rails.logger.error("Error during destroy: #{e.message}")
+      flash[:alert] = "Failed to delete Scrap: #{e.message}"
+      redirect_to scraps_path
+    end
   end
-
+  
   def process_csv
     @scrap = Scrap.find(params[:id])
     if @scrap.present? && @scrap.csv_file_name.present?
@@ -114,7 +123,7 @@ class ScrapsController < ApplicationController
   def get_data(search_term)
     result = []
     formatted_search_term = search_term.gsub(' ', '+')
-    url = "https://www.google.com/search?q=#{formatted_search_term}=en-US"
+    url = "https://www.google.com/search?q=#{formatted_search_term}&hl=en"
 
     headers = [
       { "User-Agent":
@@ -130,25 +139,25 @@ class ScrapsController < ApplicationController
       { "User-Agent":
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36" }
     ]
-    unparsed_page = HTTParty.get(url, headers: headers.sample, follow_redirects: true)
+    unparsed_page = HTTParty.get(url, headers: headers.sample,
+    
+    follow_redirects: true)
     parsed_page = Nokogiri::HTML(unparsed_page.body)
-    all_spans = parsed_page.css('span')
-
- sponsored_spans = all_spans.select { |span| span.text.strip.downcase.include?('sponsored') }
-advertisers_count = sponsored_spans.count
+   
+ 
+    sponsored_spans = parsed_page.css('span').select { |span| span.text.include?('Sponsored') }.count
+    advertisers_count = sponsored_spans
 
 
     result_stats = parsed_page.css('#result-stats').text
     links = parsed_page.css('a').count
-    html_content = parsed_page.to_html
+    html_content = parsed_page.to_html.to_s.gsub(/<script.*?<\/script>/m, '')
     result.push(advertisers_count, result_stats, links, html_content)
-    sleep(2)
+    sleep(4)
     result
   end
 
   def validate_csv_file
-  
-
     unless valid_csv_file?
       flash[:alert] = 'Invalid file type. Please upload a CSV file.'
       redirect_to new_scrap_path

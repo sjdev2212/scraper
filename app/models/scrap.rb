@@ -1,6 +1,5 @@
 class Scrap < ApplicationRecord
   mount_uploader :csv_file_name, CsvFileUploader
-  before_validation :set_user
   belongs_to :user
   has_many :scrap_details, dependent: :destroy
 
@@ -8,12 +7,8 @@ class Scrap < ApplicationRecord
   validates :user_id, presence: true
   validate :validate_unique_file_name
 
-
-
   private
-  def set_user
-    self.user = User.current_user if User.respond_to?(:current_user)
-  end
+
 
 
   def validate_unique_file_name

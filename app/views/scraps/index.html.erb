@@ -1,7 +1,11 @@
-<h1>
+<section class='container'>
+<div class='text-end '>
+<%= link_to 'Go Back' , root_path ,class:'link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover ' %>
+</div>
+<h1 class='text-center text-danger-emphasis'>
 Hello <%= current_user.name%>
 </h1>
-<h3>
+<h3 class='text-center text-danger-emphasis mb-5'>
 You have uploaded <%= current_user.scraps.count %> files
 </h3>
 <% @scraps.each do |scrap| %>
@@ -10,13 +14,14 @@ You have uploaded <%= current_user.scraps.count %> files
 
    
        <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-6 fs-5 d-flex align-items-center fw-semibold">
    <%= File.basename(scrap.csv_file_name.file.filename) if scrap.csv_file_name.present? %>
        
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 d-flex justify-content-evenly">
      
-<%= link_to 'See queries', scrap_path(scrap.id)%>
+<%= link_to 'See queries', scrap_path(scrap.id) ,class:'link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover '%>
+<%= button_to  'Delete file',  scrap_path(scrap), method: :delete ,class: 'btn btn-outline-dark' %>
        
       </div>
     </div>
