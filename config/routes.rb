@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   resources :scraps do
     collection do
-      resources :scrap_details, only: [:index]
+      resources :scrap_details, only: [:index, :show]
     end
   end
 end

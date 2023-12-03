@@ -47,12 +47,14 @@ gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "bootsnap", require: false
 
 gem 'devise', '~> 4.9', '>= 4.9.3'
+
 gem 'bootstrap'
 
 # Use Sass to process CSS
 gem "sassc-rails"
 
 gem 'nokogiri', '~> 1.15', '>= 1.15.5'
+
 gem 'carrierwave', '~> 3.0'
 
 gem 'animate.css-rails', '~> 3.2.0'

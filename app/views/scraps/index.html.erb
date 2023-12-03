@@ -1,3 +1,4 @@
+
 <section class='container'>
 <div class='text-end '>
 <%= link_to 'Go Back' , root_path ,class:'link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover ' %>
@@ -8,6 +9,10 @@ Hello <%= current_user.name%>
 <h3 class='text-center text-danger-emphasis mb-5'>
 You have uploaded <%= current_user.scraps.count %> files
 </h3>
+
+
+
+
 <% @scraps.each do |scrap| %>
 <ul class='list-group'>
     <li class='list-group-item'>
@@ -20,6 +25,7 @@ You have uploaded <%= current_user.scraps.count %> files
       </div>
       <div class="col-md-6 d-flex justify-content-evenly">
      
+
 <%= link_to 'See queries', scrap_path(scrap.id) ,class:'link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover '%>
 <%= button_to  'Delete file',  scrap_path(scrap), method: :delete ,class: 'btn btn-outline-dark' %>
        
@@ -27,11 +33,11 @@ You have uploaded <%= current_user.scraps.count %> files
     </div>
      </li>
 
+
+
 </ul>
 
-
-<% end %>
-
+<% end%>
 
 
 

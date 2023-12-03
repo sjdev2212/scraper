@@ -70,15 +70,18 @@ class ScrapsController < ApplicationController
       end
 
       flash[:notice] = 'Scrap was successfully created.'
-      redirect_to scraps_path
+      redirect_to scrap_path(@scrap)
+    
+     
     else
       if @scrap.errors[:csv_file_name].include?('file name already exists in the database')
+        redirect_to new_scrap_path
         flash[:alert] = 'A file with that name already exists.'
       else
         flash[:alert] = 'Scrap was not created.'
       end
 
-      render :new
+      
     end
   end
 
