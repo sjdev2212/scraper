@@ -1,24 +1,85 @@
-# README
+# Scraper
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+> Ruby on rails app to scrap results in Google.
+>
+> To test the app  login as:
+>
+> user:  user1@gmail.com
+>
+> password: 123456
+>
+> Or  create an account and upload a cvs file  with a single column of search keywords.
+>
+> Example:
+>
+> Nike,
+> Adidas,
+> Apple,
+> Samsung,
+> Google,
+> Microsoft,
+> Toyota,
+> Honda,
 
-Things you may want to cover:
+## Live demo deployed on Render
 
-* Ruby version
+[Scrapper](https://scraper-jgvg.onrender.com/)
 
-* System dependencies
+## Built With
 
-* Configuration
+- Major languages: Ruby
+- Frameworks: ROR
+- Gems: devise, httparty, bootstrap, nokogiri, carrierwave
 
-* Database creation
+## Getting Started
 
-* Database initialization
+To get a local copy up and running follow these simple example steps.
 
-* How to run the test suite
+### Prerequisites
 
-* Services (job queues, cache servers, search engines, etc.)
+You need to have followings installed in your local machine:
 
-* Deployment instructions
+- Ruby '3.1.2'
+- `Postgresql`
+- `Rails 7`
 
-* ...
+### Setup
+
+To setup the project in your local, in the repo page:
+
+- 
+- Open terminal of path you want to install project and run this command:
+  `git clone  https://github.com/sjdev2212/scraper.git`
+- `cd scraper/`
+- `bundle install`
+- `bin/rails db:create`
+- `bin/rails db:migrate`
+
+## Instruction on the usage
+
+- Run the following comands in your command line:
+- `rails s`
+- `open any browser`
+- `type "localhost:3000"`
+- `enjoy the app`
+
+## Testing
+
+* rails test
+
+## Author
+
+👤 **Anibal Amoroso**
+
+- [GitHub:](https://github.com/sjdev2212)
+- [LinkedIn](https://linkedin.com/in/anibalamoroso/)
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the  [issues page](https://github.com/sjdev2212/scraper/issues)
+
+## Show your support
+
+Give a ⭐️ if you like this project
