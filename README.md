@@ -6,7 +6,7 @@
 >
 > user:  user1@gmail.com
 >
-> password: 123456
+> password: 313131
 >
 > Or  create an account and upload a cvs file  with a single column of search keywords.
 >
