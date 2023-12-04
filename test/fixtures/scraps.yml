@@ -4,12 +4,28 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one:
-cvs_file_name : "some_file.csv"
-queries : ['one', 'two' ]
+one: 
+ id: 1
+ csv_file_name : "test.csv"
+ queries : [one, two]
+ user : one # Reference to the user fixture
+
+
 
 # column: value
 
 #
 two: {}
 # column: value
+
+one_scrap:
+  csv_file_name: "test.csv"
+  queries: ["one", "two"]
+  user: one # Reference to the user fixture
+
+
+# Add another scrap for the same user if needed
+another_scrap:
+  csv_file_name: "another_test.csv"
+  queries: ["three", "four"]
+  user: one # Reference 

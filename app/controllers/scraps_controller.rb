@@ -71,8 +71,7 @@ class ScrapsController < ApplicationController
 
       flash[:notice] = 'Scrap was successfully created.'
       redirect_to scrap_path(@scrap)
-    
-     
+
     else
       if @scrap.errors[:csv_file_name].include?('file name already exists in the database')
         redirect_to new_scrap_path
@@ -81,15 +80,14 @@ class ScrapsController < ApplicationController
         flash[:alert] = 'Scrap was not created.'
       end
 
-      
     end
   end
 
   def destroy
     @scrap = Scrap.find(params[:id])
-    
+
     Rails.logger.debug("Before destroy: #{@scrap.inspect}")
-  
+
     begin
       @scrap.destroy
       flash[:notice] = 'Scrap was successfully deleted.'
@@ -100,7 +98,7 @@ class ScrapsController < ApplicationController
       redirect_to scraps_path
     end
   end
-  
+
   def process_csv
     @scrap = Scrap.find(params[:id])
     if @scrap.present? && @scrap.csv_file_name.present?
@@ -143,14 +141,12 @@ class ScrapsController < ApplicationController
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36" }
     ]
     unparsed_page = HTTParty.get(url, headers: headers.sample,
-    
-    follow_redirects: true)
+
+                                      follow_redirects: true)
     parsed_page = Nokogiri::HTML(unparsed_page.body)
-   
- 
+
     sponsored_spans = parsed_page.css('span').select { |span| span.text.include?('Sponsored') }.count
     advertisers_count = sponsored_spans
-
 
     result_stats = parsed_page.css('#result-stats').text
     links = parsed_page.css('a').count

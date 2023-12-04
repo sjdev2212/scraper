@@ -1,6 +1,6 @@
 <section class='container'>
 <div class='text-end '>
-<%= link_to 'Go Back' , scraps_details_path ,class:'link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover ' %>
+<%= link_to 'Go Back' , scrap_path(@scrap_detail.scrap_id) ,class:'link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover ' %>
 </div>
 <h1 class='text-center fs-2 fw-semibold text-danger-emphasis mb-4'>
 Results for the query: <span class='text-dark'> <%= @scrap_detail.query %> </span>
