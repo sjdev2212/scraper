@@ -7,7 +7,7 @@ class ActiveSupport::TestCase
   parallelize(workers: :number_of_processors)
 
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-  fixtures :users
+  fixtures :users  , :scrap_details  , :scraps
   include Devise::Test::IntegrationHelpers
   # Add more helper methods to be used by all tests here...
 end
