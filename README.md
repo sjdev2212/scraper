@@ -4,7 +4,7 @@
 >
 > To test the app  login as:
 >
-> user:  user1@gmail.com
+> user:  user@gmail.com
 >
 > password: 313131
 >
