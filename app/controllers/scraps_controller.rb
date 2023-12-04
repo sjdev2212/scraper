@@ -19,7 +19,7 @@ class ScrapsController < ApplicationController
     @scrap_detail = @scrap.scrap_details
     @search = params[:search]
     if @search.present?
-      @scrap_detail = @scrap.scrap_details.where('query LIKE ?', "%#{@search}%")
+      @scrap_detail = @scrap.scrap_details.where('LOWER(query) LIKE ?', "%#{@search.downcase}%")
     else
       @scrap_detail = @scrap.scrap_details
     end
